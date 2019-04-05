@@ -59,3 +59,13 @@ class Tools:
         A = Tools.get_neighbour_matrix(g)
         ev = Tools.get_eigenvalues(A)
         return Tools.second_largest(ev)
+
+    @staticmethod
+    def total_edge_cost(g):
+        """
+        Calculates the total cost of all edges in the given graph.
+
+        :param g: A networkx object with nodes and edges.
+        :return: The total cost of all edges in the graph.
+        """
+        raise NotImplementedError
