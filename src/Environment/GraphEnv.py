@@ -87,6 +87,10 @@ class GraphEnv(py_environment.PyEnvironment):
         return self._allowed_actions
 
     def _step(self, action):
+        x,y = action
+
+        if
+
         pass
 
     def _reset(self):
