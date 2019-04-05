@@ -96,10 +96,10 @@ class GraphEnv(py_environment.PyEnvironment):
         """
 
         x,y = action
-        reward
+        reward = 0.0
 
 
-        if not Creator.add_edge(nxgraph,x+1,y+1):
+        if not Creator.add_edge(self.nxgraph,x+1,y+1):
             raise NotImplementedError
         else
             raise NotImplementedError
