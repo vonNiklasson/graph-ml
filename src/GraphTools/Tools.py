@@ -1,4 +1,5 @@
 import numpy as np
+import networkx 
 from numpy import linalg as LA
 
 
@@ -7,8 +8,12 @@ class Tools:
     @staticmethod
     def get_neighbour_matrix(g):
         """
+        Creates a stochastic adjacency matrix for a specified graph: g, each row represents a node in the graph
+        where the values in each column represents if there is an edge or not between those nodes.
+        The values for each neighbour is represented by 1/(number of neighbours), if no edge exists this value is 0.
 
-        :type g: networkx
+        :param g: Networkx bi-directional graph object
+        :return A: List of rows, representing the adjacency matrix
         """
         # Sort the nodes in the graph
         s_nodes = list(g.nodes())
@@ -37,12 +42,24 @@ class Tools:
 
     @staticmethod
     def get_eigenvalues(a):
+        """
+        Simple function to retrieve the eigenvalues of matrix a
+        :param a: list containing lists of rows representing a matrix
+        :return w: list of eigen values
+        """
+        
         A = np.array(a)
         w, _ = LA.eig(A)
         return w
 
     @staticmethod
     def second_largest(numbers):
+        """
+        Simple function to return the 2nd largest number in a list of numbers
+        :param numbers: A list of numbers
+        :return m2: The 2nd largest number in the list numbers
+
+        """
         count = 0
         m1 = m2 = float('-inf')
         for x in numbers:
@@ -56,6 +73,11 @@ class Tools:
 
     @staticmethod
     def convergence_rate(g):
+        """
+        Function to retrieve the 2nd largest eigenvalue in the adjacency matrix of a graph
+        :param g: Networkx bi-directional graph object
+        :return: The 2nd largest eigenvalue of the adjacency matrix
+        """
         A = Tools.get_neighbour_matrix(g)
         ev = Tools.get_eigenvalues(A)
         return Tools.second_largest(ev)
