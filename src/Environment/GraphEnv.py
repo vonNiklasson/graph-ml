@@ -1,6 +1,8 @@
 from typing import List, Tuple
 
 from tf_agents.environments import py_environment
+
+from Environment import EnvTools
 from GraphTools import Creator, Tools
 import networkx as nx
 import math
@@ -57,27 +59,7 @@ class GraphEnv(py_environment.PyEnvironment):
             self._allowed_edge_count = allowed_edge_count
 
         # Creates a list of allowed actions to take in the graph
-        self._allowed_actions = GraphEnv.create_actions(self._node_count)
-
-    @staticmethod
-    def create_actions(node_count: int) -> [(int, int)]:
-        """
-        Creates a set of actions for adding edges in a graph with node_count nodes.
-        Will result in a n(n-1)/2 number of actions.
-
-        :param node_count: The number of nodes to create actions of.
-        :return: A list of tuples, representing actions to take.
-        """
-        # Creates an empty list of actions
-        actions: [(int, int)] = []
-        # Iterate through all nodes, representing <origin>
-        for origin in range(0, node_count):
-            # Iterate through all nodes larger than origin, representing <destination>.
-            for dest in range(origin+1, node_count):
-                # Add edge to actions
-                actions.append((origin, dest))
-
-        return actions
+        self._allowed_actions = EnvTools.create_action_set(self._node_count)
 
     def observation_spec(self):
         pass
@@ -102,23 +84,9 @@ class GraphEnv(py_environment.PyEnvironment):
         else:
             raise NotImplementedError
 
-
         pass
 
     def _reset(self):
         # Creates a new networkx graph structure
         self.nxgraph = Creator.from_node_count(self._node_count)
-        return GraphEnv.get_state(self.nxgraph)
-
-    @staticmethod
-    def get_state(nxgraph: nx.Graph):
-        a = Tools.get_neighbour_matrix(nxgraph)
-        return [
-            # Number of connected components
-            nx.algorithms.components.number_connected_components(nxgraph),
-            # Number of edges left to assign
-            nxgraph.number_of_edges(),
-            math.inf,   # Convergence rate
-            0,          # Total edge cost
-            a           # Stochastic adjacency matrix
-        ]
+        return EnvTools.get_state(self.nxgraph)
