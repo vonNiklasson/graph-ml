@@ -94,13 +94,12 @@ class GraphEnv(py_environment.PyEnvironment):
         :return reward: The reward for the suggested action. 
         """
 
-        x,y = action
         reward = 0.0
+        x, y = action
 
-
-        if not Creator.add_edge(self.nxgraph,x+1,y+1):
+        if not Creator.add_edge(self.nxgraph, x+1, y+1):
             raise NotImplementedError
-        else
+        else:
             raise NotImplementedError
 
 
