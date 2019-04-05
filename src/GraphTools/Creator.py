@@ -1,5 +1,7 @@
+from typing import Dict, Any, Set
+
 import networkx as nx
-import numpy
+import numpy as np
 from random import randint
 
 
@@ -11,22 +13,21 @@ class Creator:
     @classmethod
     def from_node_count(cls, node_count):
         area_dimension = node_count
-        netx = nx.Graph()  # type: nx.Graph
+        netx: nx.Graph = nx.Graph()
 
-        node_set = {}
+        node_set: Set[str] = set()
 
         for n in range(0, node_count):
             coordinates = None
-            while coordinates is None or coordinates in node_set:
+            while coordinates is None or str(coordinates) in node_set:
                 coordinates = (
                     randint(0, area_dimension),
                     randint(0, area_dimension)
                 )
             netx.add_node(n, coordinates=coordinates)
+            node_set.add(str(coordinates))
 
         return netx
-
-
 
     @classmethod
     def from_dict(cls, g):
