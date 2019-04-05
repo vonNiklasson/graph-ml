@@ -1,31 +1,65 @@
+from typing import List, Tuple
 from tf_agents.environments import py_environment
+from GraphTools import Creator
+import networkx as nx
 
 
 class GraphEnv(py_environment.PyEnvironment):
 
     _node_count: int = None
     """
+    Number of nodes to create an environment from.
     """
+
+    nxgraph: nx.Graph = None
+    """
+    The networkx object representing the current graph we're working on.
+    """
+
     state = [
-        # Components,
-        # Edges left,
-        # Convergence rate,
-        # Total cost,
-        # Neighbour matrix
+        0,      # Components,
+        0,      # Edges left,
+        0.0,    # Convergence rate,
+        0,      # Total cost,
+        [[]]    # Neighbour matrix
     ]
 
-    _allowed_actions = []
+    _allowed_actions: List[Tuple[int, int]] = []
+    """
+    Contains a list of possible edges to do action on.
+    Will be a list of tuples represented by origin and destination.
+    Example: (0, 1) represents an edge from node 0 to node 1.
+    """
 
-    def __init__(self, node_count):
+    def __init__(self, node_count: int):
+        """
+        Initialises a new environment for a graph.
+
+        :param node_count: The number of nodes for the given graph.
+        """
         super(GraphEnv, self).__init__()
 
+        # Stores the node count locally
         self._node_count = node_count
+        # Creates a list of allowed actions to take in the graph
+        self._allowed_actions = GraphEnv.create_actions(self._node_count)
 
     @staticmethod
-    def create_actions(node_count):
-        actions = []
+    def create_actions(node_count: int) -> [(int, int)]:
+        """
+        Creates a set of actions for adding edges in a graph with node_count nodes.
+        Will result in a n(n-1)/2 number of actions.
+
+        :param node_count: The number of nodes to create actions of.
+        :return: A list of tuples, representing actions to take.
+        """
+        # Creates an empty list of actions
+        actions: [(int, int)] = []
+        # Iterate through all nodes, representing <origin>
         for origin in range(0, node_count):
+            # Iterate through all nodes larger than origin, representing <destination>.
             for dest in range(origin+1, node_count):
+                # Add edge to actions
                 actions.append((origin, dest))
 
         return actions
