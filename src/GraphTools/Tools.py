@@ -36,7 +36,7 @@ class Tools:
                 row[node_index] = 1
                 neighbour_count += 1
             row_divide = float(neighbour_count + 1)
-            row = map(lambda x: x / row_divide, row)
+            row = list(map(lambda x: x / row_divide, row))
             A.append(row)
         return A
 
