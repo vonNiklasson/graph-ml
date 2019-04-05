@@ -68,7 +68,6 @@ class GraphEnv(py_environment.PyEnvironment):
         return self._allowed_actions
 
     def _step(self, action):
-
         """
         Step action for the machine learning algorithm
 
