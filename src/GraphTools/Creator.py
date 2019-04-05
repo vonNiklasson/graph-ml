@@ -52,6 +52,10 @@ class Creator:
 
     @staticmethod
     def add_edge(g, start, destination):
+
+        if g.has_edge(start, destination):
+            return False
+
         # find start & end coordinates
         start_cord = g.node[start]['coordinates']
         destination_cord = g.node[destination]['coordinates']
@@ -67,4 +71,6 @@ class Creator:
 
         #add edge to graph
         g.add_edge(start, destination, weight=weight)
+
+        return True
 
