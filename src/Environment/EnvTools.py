@@ -28,6 +28,19 @@ class EnvTools:
 
     @staticmethod
     def get_state(nxgraph: nx.Graph):
+        """
+        Converts a networkx bi-directional graph into the current state of the environment.
+
+        :param nxgraph: A bi-directional networkx object
+        :return state: [
+            connected components,
+            edges left to place,
+            convergence rate,
+            total edge cost
+            stochastic adjacency matrix
+        ]
+        """
+
         connected_components = nx.algorithms.components.number_connected_components(nxgraph)
         a = Tools.get_neighbour_matrix(nxgraph)
         return [
@@ -42,8 +55,31 @@ class EnvTools:
 
     @staticmethod
     def is_final_state(state):
+        """
+        Function to see if the current state is the final state of the environment. This occurrs when there are no more edges to be added.
+
+        :param state: State of the environment
+        :return: Returns true/false depending on if the state is final
+        """
+        connected_components, edges_left, convergence_rate, edge_cost, adjacency_matrix = state
+
+        if edges_left == 0:
+            return True
+        
+        raise NotImplementedError
+
         pass
 
     @staticmethod
     def calculate_reward(state, previous_state):
+        """
+        Function to calculate the reward from a step taken depending on the change of state in the environment.
+
+        :param state: The current state resulted from making a step.
+        :param previous_state: The previously existing state before the step.
+        
+        return: Reward based on x,y,z
+        """
+
+        raise NotImplementedError
         pass
