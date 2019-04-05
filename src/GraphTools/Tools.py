@@ -75,6 +75,7 @@ class Tools:
     def convergence_rate(g):
         """
         Function to retrieve the 2nd largest eigenvalue in the adjacency matrix of a graph
+
         :param g: Networkx bi-directional graph object
         :return: The 2nd largest eigenvalue of the adjacency matrix
         """
@@ -85,9 +86,15 @@ class Tools:
     @staticmethod
     def total_edge_cost(g):
         """
-        Calculates the total cost of all edges in the given graph.
+        Calculates the total cost of all edges in the given graph
 
         :param g: A networkx object with nodes and edges.
         :return: The total cost of all edges in the graph.
         """
-        raise NotImplementedError
+        total = 0
+        edges = g.edges(data = True)
+
+        for edge in edges:
+            total += edge['weight']
+            
+        return total
