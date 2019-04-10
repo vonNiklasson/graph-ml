@@ -1,7 +1,7 @@
 from typing import Dict, Any, Set
 
 import networkx as nx
-import numpy as np
+import numpy
 from random import randint
 
 

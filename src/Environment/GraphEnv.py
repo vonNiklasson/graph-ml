@@ -70,19 +70,26 @@ class GraphEnv(py_environment.PyEnvironment):
     def _step(self, action):
 
         """
-        Step action for the machine learning algorithm
+        Step action for the machine learning algorithm.
 
-        :param action: Tuple containing two integers, representing an edge to be added
-        :return reward: The reward for the suggested action. 
+        :param action: Tuple containing two integers, representing an edge to be added.
+        :return reward: The reward for the suggested action.
         """
 
         reward = 0.0
         x, y = action
 
         if not Creator.add_edge(self.nxgraph, x+1, y+1):
+            reward = 0.0
+            # TODO: do we return here?
             raise NotImplementedError
         else:
+            reward = 1.0
+            new_state = EnvTools.get_state(self.nxgraph)
+            EnvTools.evaluate_state()
             raise NotImplementedError
+
+
 
         pass
 
