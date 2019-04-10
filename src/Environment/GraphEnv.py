@@ -33,6 +33,14 @@ class GraphEnv(py_environment.PyEnvironment):
         [[]]        # Stochastic adjacency matrix
     ]
 
+    previous_state = [
+        0,          # Components,
+        0,          # Edges left,
+        math.inf,   # Convergence rate,
+        0,          # Total cost,
+        [[]]        # Stochastic adjacency matrix
+    ]
+
     _allowed_actions: List[Tuple[int, int]] = []
     """
     Contains a list of possible edges to do action on.
@@ -86,7 +94,7 @@ class GraphEnv(py_environment.PyEnvironment):
         else:
             reward = 1.0
             new_state = EnvTools.get_state(self.nxgraph)
-            EnvTools.evaluate_state()
+            EnvTools.calculate_reward(self.state, self.previous_state)
             raise NotImplementedError
 
 

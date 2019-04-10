@@ -66,6 +66,7 @@ class EnvTools:
         if edges_left == 0:
             return True
         
+        
         raise NotImplementedError
 
         pass
@@ -81,5 +82,7 @@ class EnvTools:
         return: Reward based on x,y,z
         """
 
+
         raise NotImplementedError
         pass
+    
