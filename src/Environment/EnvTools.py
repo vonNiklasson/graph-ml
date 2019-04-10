@@ -27,7 +27,7 @@ class EnvTools:
         return actions
 
     @staticmethod
-    def get_state(nxgraph: nx.Graph):
+    def get_state(nxgraph: nx.Graph, node_count: int):
         """
         Converts a networkx bi-directional graph into the current state of the environment.
 
@@ -43,14 +43,23 @@ class EnvTools:
 
         connected_components = nx.algorithms.components.number_connected_components(nxgraph)
         a = Tools.get_neighbour_matrix(nxgraph)
+
+        # Check if the number of components is 1 or not.
+        # We don't to calculate the convergence rate if not
+        # all components are connected.
+        if connected_components == 1:
+            convergence_rate = Tools.convergence_rate(nxgraph)
+        else:
+            convergence_rate = math.inf
+
         return [
             # Number of connected components
             connected_components,
             # Number of edges left to assign
-            nxgraph.number_of_edges(),
-            math.inf,   # Convergence rate
-            0,          # Total edge cost
-            a           # Stochastic adjacency matrix
+            node_count - nxgraph.number_of_edges() - 1,
+            convergence_rate,   # Convergence rate
+            0,                  # Total edge cost
+            a                   # Stochastic adjacency matrix
         ]
 
     @staticmethod

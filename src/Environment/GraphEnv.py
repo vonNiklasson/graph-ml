@@ -88,4 +88,4 @@ class GraphEnv(py_environment.PyEnvironment):
     def _reset(self):
         # Creates a new networkx graph structure
         self.nxgraph = Creator.from_node_count(self._node_count)
-        return EnvTools.get_state(self.nxgraph)
+        return EnvTools.get_state(self.nxgraph, self._node_count)
