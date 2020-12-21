@@ -20,7 +20,7 @@ pyparsing==2.3.1
 python-dateutil==2.8.0
 six==1.12.0
 tb-nightly==1.14.0a20190301
-tensorflow==2.0.0a0
+tensorflow==2.4.0
 tensorflow-probability==0.6.0
 termcolor==1.1.0
 tf-agents-nightly==0.2.0.dev20190321
